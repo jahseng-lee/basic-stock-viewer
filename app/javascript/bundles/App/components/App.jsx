@@ -62,8 +62,4 @@ const App = () => {
   );
 };
 
-App.propTypes = {
-  name: PropTypes.string.isRequired, // this is passed from the Rails view
-};
-
 export default App;
