@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ReactAppController < ApplicationController
-  layout "hello_world"
+  layout "app"
 
   def index; end
 end
