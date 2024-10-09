@@ -1,20 +1,44 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
-import * as style from './App.module.css';
+import React, { useState, useEffect } from 'react';
+import Highcharts from 'highcharts/highstock';
+import HighchartsReact from 'highcharts-react-official';
 
-const App = (props) => {
-  const [name, setName] = useState(props.name);
+const App = () => {
+  const [stockData, setStockData] = useState();
+
+  useEffect(() => {
+    fetch('/stock_data/1')
+      .then((response) => response.text())
+      .then((data) => {
+        const deserializedData = JSON.parse(data);
+
+        setStockData({
+          title: {
+            text: `Stock chart: ${deserializedData.name}`
+          },
+          series: [
+            {
+              data: deserializedData.seriesData
+            }
+          ]
+        });
+      })
+  }, []);
 
   return (
     <div>
-      <h3>Hello, {name}!</h3>
+      {/* TODO make a header with nav links */}
+      <h1>Basic stock viewer</h1>
       <hr />
-      <form>
-        <label className={style.bright} htmlFor="name">
-          Say hello to:
-          <input id="name" type="text" value={name} onChange={(e) => setName(e.target.value)} />
-        </label>
-      </form>
+      {
+        !!stockData && (
+          <HighchartsReact
+            highcharts={Highcharts}
+            constructorType={'stockChart'}
+            options={stockData}
+          />
+        )
+      }
     </div>
   );
 };
