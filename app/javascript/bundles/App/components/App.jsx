@@ -3,11 +3,14 @@ import React, { useState, useEffect } from 'react';
 import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
 
+import Navbar from './Navbar';
+
 const App = () => {
+  const [stockId, setStockId] = useState(1);
   const [stockData, setStockData] = useState();
 
   useEffect(() => {
-    fetch('/stock_data/1')
+    fetch(`/stock_data/${stockId}`)
       .then((response) => response.text())
       .then((data) => {
         const deserializedData = JSON.parse(data);
@@ -18,18 +21,20 @@ const App = () => {
           },
           series: [
             {
-              data: deserializedData.seriesData
+              data: deserializedData.series_data
             }
           ]
         });
       })
-  }, []);
+  }, [stockId]);
+
+  const changeStockChart = (_stockId) => {
+    setStockId(_stockId);
+  };
 
   return (
     <div>
-      {/* TODO make a header with nav links */}
-      <h1>Basic stock viewer</h1>
-      <hr />
+      <Navbar onClick={changeStockChart} />
       {
         !!stockData && (
           <HighchartsReact
