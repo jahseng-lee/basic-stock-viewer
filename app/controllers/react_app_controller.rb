@@ -3,7 +3,5 @@
 class ReactAppController < ApplicationController
   layout "hello_world"
 
-  def index
-    @props = { name: "Stranger" }
-  end
+  def index; end
 end

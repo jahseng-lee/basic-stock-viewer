@@ -8,9 +8,9 @@ const Navbar = (props) => (
       <h1>Basic stock viewer</h1>
     </div>
     <div>
-      <a href='#' onClick={() => props.onClick(1)}>Fake stock 1</a>
-      <a href='#' onClick={() => props.onClick(2)}>Fake stock 2</a>
-      <a href='#' onClick={() => props.onClick(3)}>Fake stock 3</a>
+      <a href='#' onClick={() => props.onClick("IBM")}>IBM</a>
+      <a href='#' onClick={() => props.onClick("TSLA")}>Tesla</a>
+      <a href='#' onClick={() => props.onClick("GME")}>GME</a>
     </div>
   </div>
 );

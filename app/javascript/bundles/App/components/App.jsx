@@ -6,18 +6,25 @@ import HighchartsReact from 'highcharts-react-official';
 import Navbar from './Navbar';
 
 const App = () => {
-  const [stockId, setStockId] = useState(1);
+  const [stockSymbol, setStockSymbol] = useState("IBM");
   const [stockData, setStockData] = useState();
+  const [dailyLimitReached, setDailyLimitReached] = useState(false);
 
   useEffect(() => {
-    fetch(`/stock_data/${stockId}`)
+    fetch(`/stock_data/?stock_symbol=${stockSymbol}`)
       .then((response) => response.text())
       .then((data) => {
         const deserializedData = JSON.parse(data);
 
+        if (Object.keys(deserializedData).length === 0) {
+          // Empty, assume daily limit reached
+          setDailyLimitReached(true);
+          return;
+        };
+
         setStockData({
           title: {
-            text: `Stock chart: ${deserializedData.name}`
+            text: `Stock chart: ${stockSymbol}`
           },
           series: [
             {
@@ -26,10 +33,10 @@ const App = () => {
           ]
         });
       })
-  }, [stockId]);
+  }, [stockSymbol]);
 
-  const changeStockChart = (_stockId) => {
-    setStockId(_stockId);
+  const changeStockChart = (_stockSymbol) => {
+    setStockSymbol(_stockSymbol);
   };
 
   return (
@@ -42,6 +49,13 @@ const App = () => {
             constructorType={'stockChart'}
             options={stockData}
           />
+        )
+      }
+      {
+        dailyLimitReached && (
+          <p>
+            Daily limit reached on API calls; please try again tomorrow
+          </p>
         )
       }
     </div>
