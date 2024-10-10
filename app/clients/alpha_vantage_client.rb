@@ -3,6 +3,14 @@ class AlphaVantageClient
 
   class << self
     def time_series_daily(stock_symbol:)
+      today = Date.today
+      cache_response = AlphaVantageCache.find_by(
+        stock_symbol: stock_symbol,
+        date: today
+      )
+
+      return JSON.parse(cache_response.response) if cache_response.present?
+
       url = api_url(stock_symbol: stock_symbol)
 
       uri = URI(url)
@@ -15,6 +23,14 @@ class AlphaVantageClient
 
       response = http.request(request)
       body = JSON.parse(response.body)
+
+      AlphaVantageCache.create!(
+        stock_symbol: stock_symbol,
+        response: response.body,
+        date: today
+      )
+
+      body
     end
 
     private
