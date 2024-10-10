@@ -50,6 +50,6 @@ group :development do
 end
 
 
-gem "shakapacker", "= 8.0"
+gem "shakapacker", "8.0.2"
 
 gem "react_on_rails", "= 14.0.4"
