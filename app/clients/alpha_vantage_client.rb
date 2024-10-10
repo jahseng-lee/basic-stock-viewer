@@ -1,4 +1,7 @@
 class AlphaVantageClient
+  # NOTE: I normally wouldn't put a secret in a class like this, but
+  #       it was easier to do this than to set up a secrets file then
+  #       try to coordiante sending it to you to include in the demo
   API_KEY = "T6FH1B511K1ILGM8"
 
   class << self
