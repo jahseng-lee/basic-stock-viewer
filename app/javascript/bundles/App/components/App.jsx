@@ -23,7 +23,7 @@ const App = () => {
 
         setStockData({
           title: {
-            text: `Stock chart: ${stockSymbol}`
+            text: `Daily stock prices: ${stockSymbol}`
           },
           series: [
             {

@@ -10,7 +10,7 @@ const Navbar = (props) => (
     <div>
       <a href='#' onClick={() => props.onClick("IBM")}>IBM</a>
       <a href='#' onClick={() => props.onClick("TSLA")}>Tesla</a>
-      <a href='#' onClick={() => props.onClick("GME")}>GME</a>
+      <a href='#' onClick={() => props.onClick("GME")}>Gamestop</a>
     </div>
   </div>
 );
